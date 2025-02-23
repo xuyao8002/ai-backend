@@ -7,11 +7,13 @@ const messageRoutes = require('./routes/message');
 const modelRoutes = require('./routes/model');
 const userModelRoutes = require('./routes/userModel');
 const authMiddleware = require('./middlewares/authMiddleware'); // 引入中间件
-
+const compression = require('compression'); // 引入 compression 中间件
 const app = express();
 
 // 连接数据库
 connectDB();
+// 启用 compression 中间件
+app.use(compression());
 
 // 中间件
 app.use(cors());

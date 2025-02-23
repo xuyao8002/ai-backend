@@ -3,8 +3,11 @@ const redisClient = require('../config/redis');
 
 const authMiddleware = async (req, res, next) => {
   // 从请求头中获取token
-  const token = req.headers.authorization?.split(' ')[1];
-
+  let token = req.headers.authorization?.split(' ')[1];
+  // 如果 headers.authorization 中没有 token，尝试从查询参数中提取
+  if (!token) {
+    token = req.query.token;
+  }
   if (!token) {
     return res.status(401).json({ code: 401, message: '用户未登录' });
   }
